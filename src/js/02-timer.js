@@ -14,8 +14,6 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    // console.log(selectedDates[0].getTime());
-    // console.log('defaultDate', this);
     if (selectedDates[0] < this.config.defaultDate) {
       refs.startBtn.setAttribute('disabled', true);
       window.alert('Please choose a date in the future');
@@ -46,12 +44,14 @@ function startBtnClickHandler() {
 }
 
 function renderTimer({ days, hours, minutes, seconds }) {
-  refs.daysEl.textContent = days;
-  refs.hoursEl.textContent = hours;
-  refs.minutesEl.textContent = minutes;
-  refs.secondsEl.textContent = seconds;
+  refs.daysEl.textContent = pad(days);
+  refs.hoursEl.textContent = pad(hours);
+  refs.minutesEl.textContent = pad(minutes);
+  refs.secondsEl.textContent = pad(seconds);
 }
-
+function pad(number) {
+  return String(number).padStart(2, '0');
+}
 function convertMs(ms) {
   // Number of milliseconds per unit of time
   const second = 1000;
