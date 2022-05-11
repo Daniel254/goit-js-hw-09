@@ -35,9 +35,13 @@ function startBtnClickHandler() {
   if (timerIsEnabled) {
     return;
   }
-  setInterval(() => {
-    renderTimer(convertMs(fp.selectedDates[0].getTime() - Date.now()));
-  }, 1000);
+  setInterval(
+    (function tick() {
+      renderTimer(convertMs(fp.selectedDates[0].getTime() - Date.now()));
+      return tick;
+    })(),
+    1000,
+  );
   timerIsEnabled = true;
 }
 
