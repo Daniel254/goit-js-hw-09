@@ -15,24 +15,21 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     if (selectedDates[0] < this.config.defaultDate) {
-      refs.startBtn.setAttribute('disabled', true);
+      disableStartBtn();
       window.alert('Please choose a date in the future');
     } else {
-      refs.startBtn.removeAttribute('disabled');
+      enableStartBtn();
     }
   },
 };
 
-let timerIsEnabled = false;
 const fp = flatpickr(refs.dateInputEl, options);
 
-refs.startBtn.setAttribute('disabled', true);
+disableStartBtn();
 refs.startBtn.addEventListener('click', startBtnClickHandler);
 
 function startBtnClickHandler() {
-  if (timerIsEnabled) {
-    return;
-  }
+  disableStartBtn();
   setInterval(
     (function tick() {
       renderTimer(convertMs(fp.selectedDates[0].getTime() - Date.now()));
@@ -40,7 +37,6 @@ function startBtnClickHandler() {
     })(),
     1000,
   );
-  timerIsEnabled = true;
 }
 
 function renderTimer({ days, hours, minutes, seconds }) {
@@ -51,6 +47,12 @@ function renderTimer({ days, hours, minutes, seconds }) {
 }
 function pad(number) {
   return String(number).padStart(2, '0');
+}
+function enableStartBtn() {
+  refs.startBtn.removeAttribute('disabled');
+}
+function disableStartBtn() {
+  refs.startBtn.setAttribute('disabled', true);
 }
 function convertMs(ms) {
   // Number of milliseconds per unit of time
