@@ -22,7 +22,7 @@ const options = {
     }
   },
 };
-
+let deltaTime;
 const fp = flatpickr(refs.dateInputEl, options);
 
 disableStartBtn();
@@ -30,15 +30,22 @@ refs.startBtn.addEventListener('click', startBtnClickHandler);
 
 function startBtnClickHandler() {
   disableStartBtn();
-  setInterval(
+  startTimer();
+}
+function startTimer() {
+  const intervalId = setInterval(
     (function tick() {
-      renderTimer(convertMs(fp.selectedDates[0].getTime() - Date.now()));
+      deltaTime = fp.selectedDates[0].getTime() - Date.now();
+      if (deltaTime < 0) {
+        clearInterval(intervalId);
+        return;
+      }
+      renderTimer(convertMs(deltaTime));
       return tick;
     })(),
     1000,
   );
 }
-
 function renderTimer({ days, hours, minutes, seconds }) {
   refs.daysEl.textContent = pad(days);
   refs.hoursEl.textContent = pad(hours);
