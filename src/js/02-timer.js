@@ -47,12 +47,12 @@ function startTimer() {
   );
 }
 function renderTimer({ days, hours, minutes, seconds }) {
-  refs.daysEl.textContent = pad(days);
-  refs.hoursEl.textContent = pad(hours);
-  refs.minutesEl.textContent = pad(minutes);
-  refs.secondsEl.textContent = pad(seconds);
+  refs.daysEl.textContent = addLeadingZero(days);
+  refs.hoursEl.textContent = addLeadingZero(hours);
+  refs.minutesEl.textContent = addLeadingZero(minutes);
+  refs.secondsEl.textContent = addLeadingZero(seconds);
 }
-function pad(number) {
+function addLeadingZero(number) {
   return String(number).padStart(2, '0');
 }
 function enableStartBtn() {
