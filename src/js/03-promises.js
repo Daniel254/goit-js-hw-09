@@ -7,12 +7,7 @@ const refs = {
   step: document.querySelector('[name=step]'),
   amount: document.querySelector('[name=amount]'),
 };
-Notify.success('success');
 
-Notify.failure('failure');
-
-Notify.warning('warning');
-Notify.info('Info');
 refs.form.addEventListener('submit', submitFormHandler);
 
 function submitFormHandler(e) {
