@@ -1,10 +1,18 @@
-refs = {
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+Notify.init({ useIcon: false });
+
+const refs = {
   form: document.querySelector('.form'),
   delay: document.querySelector('[name=delay]'),
   step: document.querySelector('[name=step]'),
   amount: document.querySelector('[name=amount]'),
 };
+Notify.success('success');
 
+Notify.failure('failure');
+
+Notify.warning('warning');
+Notify.info('Info');
 refs.form.addEventListener('submit', submitFormHandler);
 
 function submitFormHandler(e) {
@@ -18,10 +26,10 @@ function submitFormHandler(e) {
   for (let i = 0; i < amount; i++) {
     createPromise(i, promiseDelay)
       .then(({ position, delay }) => {
-        console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
+        Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
       })
       .catch(({ position, delay }) => {
-        console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+        Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
       });
     promiseDelay = promiseDelay + step;
   }
